@@ -1,0 +1,23 @@
+{
+  "name": "cucumberdemo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "cucumber-js --config cucumber.json --require-module ts-node/register",
+    "report": "node reports/generate-html-report.js"
+
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "@cucumber/cucumber": "^12.7.0",
+    "@playwright/test": "^1.58.2",
+    "multiple-cucumber-html-reporter": "^3.10.0",
+    "playwright": "^1.58.2",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3"
+  }
+}

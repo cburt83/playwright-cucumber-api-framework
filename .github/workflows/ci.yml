@@ -1,0 +1,64 @@
+name: Playwright Cucumber Tests
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  test:
+    name: Playwright Cucumber Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps
+
+      - name: Run tests
+        run: npm test
+
+      - name: Generate HTML report
+        run: node reports/generate-html-report.js
+
+      - name: Upload HTML report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: html-report
+          path: reports/html/
+
+      - name: Upload screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: screenshots
+          path: reports/screenshots/
+
+      - name: Upload videos
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: videos
+          path: videos/
+
+      - name: Upload traces
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: traces
+          path: test-results/
